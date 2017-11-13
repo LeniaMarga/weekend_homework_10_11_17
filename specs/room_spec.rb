@@ -1,6 +1,6 @@
 require('minitest/autorun')
 require('minitest/rg')
-require_relative('../rooms.rb')
+require_relative('../room.rb')
 require_relative('../song.rb')
 require_relative('../guest.rb')
 
@@ -17,11 +17,10 @@ class TestRoom < MiniTest::Test
     @room_1 = Room.new('Chinese fantasy', @playlist, @guests)
   end
 
-  # def test_if_room_is_full
-  #   @room_1.room_capacity()
-  #   assert_equal(false, @room_1.room_capacity)
-  #   assert_equal("4 guests", @guests.count)
-  # end
+  def test_room_capacity
+    @room_1.room_capacity(@guests)
+    assert_equal(2, @guests.count)
+  end
 
   def test_guest_check_in_person
     assert_equal("1 guest for room Chinese fantasy, enjoy!", @room_1.guest_check_in(@guest_1, @room_1))
@@ -39,8 +38,8 @@ class TestRoom < MiniTest::Test
     assert_equal("The playlist is: Hotel California, Staying Alive, I like to move it", @room_1.show_playlist(@playlist))
   end
 
-  def test_find_favourite_song
-    assert_equal("Whoo!", @playlist.find_favourite_song(@song_3))
+  def test_found_favourite_song
+    assert_equal("Whoo!", @room_1.found_favourite_song(@guest_1, @playlist, @song_1))
   end
 
 end

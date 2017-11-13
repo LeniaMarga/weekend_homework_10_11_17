@@ -11,6 +11,15 @@ class Room
     @max_guests = 5
   end
 
+  def room_capacity(guests)
+    if guests.count <= @max_guests
+      return "#{@guests.count} guests"
+    else
+      return "full"
+    end
+  end
+
+
   def guest_check_in(guest, room)
     if guest.wallet >= @price && @guests.count < @max_guests
       guest.wallet -= @price
@@ -29,20 +38,22 @@ class Room
 
   def add_song_to_room(song, room)
     @playlist << song
-    return "#{song.name} at room #{room.name}!"
+    return "#{song.song_name} at room #{room.name}!"
   end
 
   def show_playlist(playlist)
     room_playlist = []
     for song in playlist
-      room_playlist << song.name
+      room_playlist << song.song_name
     end
     return "The playlist is: #{room_playlist.join(', ')}"
   end
 
-  def find_favourite_song(song_name)
+  def found_favourite_song(guest, playlist, song)
     for song in playlist
-
+      if guest.add_favourite_song(song) == song.song_name
+        return "Whoo!"
+      end
     end
   end
 
